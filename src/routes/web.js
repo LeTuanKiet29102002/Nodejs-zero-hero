@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const {getHomePage, getKimoon}= require('../controllers/homeController')
 
-router.get('/', (req, res) => {
-    res.send('Hello World with Kimoon!')
-})
+router.get('/',getHomePage);
 
-router.get('/kimoon', (req, res) => {
-    res.render('sample.ejs')
-})
+router.get('/kimoon', getKimoon)
 
 
 module.exports = router;
