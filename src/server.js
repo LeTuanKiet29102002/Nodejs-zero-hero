@@ -5,8 +5,8 @@ const port = process.env.PORT || 6969;
 const hostname = process.env.HOST_NAME || 'localhost';
 const configViewEngine = require('./config/viewEngine');
 const webRoutes = require('./routes/web');
+const connection = require('./config/database');
 //get the client
-const mysql = require('mysql2');
 //config template engine
 configViewEngine(app)
 
@@ -15,20 +15,12 @@ configViewEngine(app)
 
 app.use('/', webRoutes);
 
-//test connection
-const connection = mysql.createConnection({
-  host: 'localhost',
-  port: 3307,
-  user: 'root',
-  password: '123456',
-  database: 'hoidanit'
-})
+
 
 connection.query(
   'SELECT * FROM Users u',
   function (err, result, fields) {
-    console.log('>>>result = ', result);
-    console.log('fields = ', fields);
+    console.log('>>>result = ',  result);
   }
 )
 
