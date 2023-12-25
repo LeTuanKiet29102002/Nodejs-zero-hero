@@ -1,5 +1,5 @@
 const connection = require('../config/database')
-const { getAllUsers,getUsersById } = require('../services/CRUDService')
+const { getAllUsers, getUsersById } = require('../services/CRUDService')
 
 
 const getHomePage = (req, res) => {
@@ -36,17 +36,8 @@ const getCreateUser = (req, res) => {
 };
 
 const getUpdateUser = (req, res) => {
-    // const userId = req.params.id;
-    // connection.query(
-    //     'SELECT * FROM Users where id = ?', [userId],
-    //     function (err, results, fields) {
-    //         console.log('>>>result with id = ', results);
-    //         let user = results && results.length > 0 ? results[0] : {};
-    //         res.render('update.ejs', { userEdit: user })
-    //     }
-    // )
     const userId = req.params.id;
-    
+
     getUsersById(userId, (err, user) => {
         if (err) {
             console.error(err);
@@ -57,6 +48,24 @@ const getUpdateUser = (req, res) => {
     });
 };
 
+const postUpdateUser = async (req, res) => {
+    const { email, name, city, userId } = req.body;
+    console.log(email, name, city, userId);
+    connection.query(
+
+        `
+        UPDATE Users 
+        SET email = ?, city = ?,name = ?
+        WHERE id = ?
+        `,
+        [email, city, name, userId],
+        (err, results) => {
+            console.log(results);
+            // res.send('UpDate user successfully');
+            res.redirect('/')
+        }
+    );
+};
 
 
-module.exports = { getHomePage, getKimoon, postCreateUser, getCreateUser, getUpdateUser };
+module.exports = { getHomePage, getKimoon, postCreateUser, getCreateUser, getUpdateUser, postUpdateUser };

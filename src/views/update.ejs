@@ -41,7 +41,8 @@
     </div>
     <div class="add-new-user">
       <strong>Update a user</strong>
-      <form class="row g-3" action="/create-user" method="post">
+      <form class="row g-3" action="/update-user" method="post">
+        
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label"
           >Email</label>
@@ -55,6 +56,13 @@
           name="name"
           value="<%= userEdit.name%>"
           >
+        </div>
+        <div class="col-md-6 d-none">
+          <label for="inputEmail4" class="form-label d-none"
+          >ID</label>
+          <input type="text" class="form-control d-none" id="inputEmail4" name="userId"
+          value="<%= userEdit.id%>"
+          />
         </div>
         <div class="col-12">
           <label for="inputAddress" class="form-label">Address</label>
