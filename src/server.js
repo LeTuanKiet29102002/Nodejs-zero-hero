@@ -18,7 +18,7 @@ app.use('/', webRoutes);
 
 
 connection.query(
-  'SELECT * FROM Users u',
+  'SELECT * FROM Users ',
   function (err, results, fields) {
     console.log('>>>result = ', results);
   }

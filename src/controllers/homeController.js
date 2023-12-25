@@ -1,30 +1,38 @@
 const connection = require('../config/database')
-
+const { getAllUsers } = require('../services/CRUDService')
 
 
 const getHomePage = (req, res) => {
-   return res.render('homePage.ejs')
+    getAllUsers((err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Internal Server Error');
+        }
 
-
-}
+        res.render('homePage.ejs', { listUsers: results });
+    });
+};
 
 const getKimoon = (req, res) => {
     res.render('sample.ejs');
 }
 
-const postCreateUser = (req, res) => {
-    let email = req.body.email;
-    let name = req.body.name;
-    let city = req.body.city;
+const postCreateUser = async (req, res) => {
+    const { email, name, city } = req.body;
 
     connection.query(
-        `INSERT INTO Users (email, name, city) VALUES (?,?,?)`,
-        [email, name , city],
-        function(err, results){
-            console.log((results));
-            res.send('Created user successfully')
+        'INSERT INTO Users (email, name, city) VALUES (?, ?, ?)',
+        [email, name, city],
+        (err, results) => {
+            console.log(results);
+            res.send('Created user successfully');
         }
     );
-}
+};
 
-module.exports = { getHomePage, getKimoon ,postCreateUser};
+
+const getCreateUser = (req, res) => {
+    res.render('create.ejs')
+};
+
+module.exports = { getHomePage, getKimoon, postCreateUser, getCreateUser };
