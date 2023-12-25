@@ -1,5 +1,5 @@
 const connection = require('../config/database')
-const { getAllUsers } = require('../services/CRUDService')
+const { getAllUsers,getUsersById } = require('../services/CRUDService')
 
 
 const getHomePage = (req, res) => {
@@ -35,4 +35,28 @@ const getCreateUser = (req, res) => {
     res.render('create.ejs')
 };
 
-module.exports = { getHomePage, getKimoon, postCreateUser, getCreateUser };
+const getUpdateUser = (req, res) => {
+    // const userId = req.params.id;
+    // connection.query(
+    //     'SELECT * FROM Users where id = ?', [userId],
+    //     function (err, results, fields) {
+    //         console.log('>>>result with id = ', results);
+    //         let user = results && results.length > 0 ? results[0] : {};
+    //         res.render('update.ejs', { userEdit: user })
+    //     }
+    // )
+    const userId = req.params.id;
+    
+    getUsersById(userId, (err, user) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        res.render('update.ejs', { userEdit: user });
+    });
+};
+
+
+
+module.exports = { getHomePage, getKimoon, postCreateUser, getCreateUser, getUpdateUser };
