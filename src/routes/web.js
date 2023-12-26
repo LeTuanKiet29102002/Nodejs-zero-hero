@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getHomePage, getKimoon,postCreateUser,getCreateUser,getUpdateUser,postUpdateUser}= require('../controllers/homeController')
+const {getHomePage, getKimoon,postCreateUser,getCreateUser,getUpdateUser,postUpdateUser,postDeleteUser,getDeleteUser}= require('../controllers/homeController')
 
 router.get('/',getHomePage);
 
@@ -10,6 +10,11 @@ router.post('/create-user',postCreateUser);
 
 
 router.post('/update-user',postUpdateUser);
+
+
+router.get('/delete-user/:id',getDeleteUser);
+
+router.post('/delete-user',postDeleteUser);
 
 
 router.get('/create',getCreateUser);

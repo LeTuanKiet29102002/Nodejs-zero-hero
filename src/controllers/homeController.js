@@ -67,5 +67,36 @@ const postUpdateUser = async (req, res) => {
     );
 };
 
+const getDeleteUser =(req, res)=>{
+    const userId = req.params.id;
 
-module.exports = { getHomePage, getKimoon, postCreateUser, getCreateUser, getUpdateUser, postUpdateUser };
+    getUsersById(userId, (err, user) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        res.render('delete.ejs', { userDelete: user });
+    });
+
+
+}
+const postDeleteUser = (req, res) => {
+    const { userId } = req.body;
+    
+    connection.query(
+
+        `
+        DELETE FROM Users 
+        WHERE id = ?
+        `,
+        [ userId],
+        (err, results) => {
+            console.log(results);
+            // res.send('UpDate user successfully');
+            res.redirect('/')
+        }
+    );
+}
+
+module.exports = { getHomePage, getKimoon, postCreateUser, getCreateUser, getUpdateUser, postUpdateUser ,postDeleteUser,getDeleteUser};

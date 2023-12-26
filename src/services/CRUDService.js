@@ -20,4 +20,5 @@ const getUsersById = (userId,callback) => {
         }
     )
 }
+
 module.exports = {getAllUsers,getUsersById}
